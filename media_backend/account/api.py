@@ -1,7 +1,16 @@
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from .forms import SignupForm
+from account.forms import SignupForm
+
+
+@api_view(['GET'])
+def me(request):
+    return JsonResponse({
+        'id': request.user.id,
+        'email': request.user.name,
+        'password': request.user.email
+    })
 
 
 @api_view(['POST'])
@@ -22,6 +31,6 @@ def signup(request):
         form.save()
         #send verification email later.
     else:
-        message: 'Error'
+        message = 'Error'
 
     return JsonResponse({'message':message})

@@ -1,5 +1,7 @@
-from django.db import models
 import uuid
+
+from django.db import models
+
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.utils import timezone
 
@@ -8,7 +10,7 @@ class CustomUserManager(UserManager):
         if not email:
             raise ValueError("You have not provided a valid e-mail address.")
         email = self.normalize_email(email)
-        name = self.model(email = email, name = name, **extra_fields)
+        user = self.model(email = email, name = name, **extra_fields)
         user.set_password(password)
         user.save(using = self._db)
 
@@ -27,7 +29,7 @@ class CustomUserManager(UserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key= True, default = uuid.uuid4, editable=False)
-    email = models.EmailField(blank=True, default='', unique=True)
+    email = models.EmailField(unique=True)
     name = models.CharField(blank=True, max_length = 250, default='')
     avatar = models.ImageField(blank = True, upload_to = 'avatars', null = True)
 
@@ -38,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)
     lost_login = models.DateTimeField(blank = True, null = True)
 
-    objects = CustomUserManager ()
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'

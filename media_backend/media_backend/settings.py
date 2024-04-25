@@ -45,15 +45,16 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-    ),
+    )
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8000",
+    #url of the front_end local
+    "http://localhost:5173",
 ]
 
 CSRF_TURSTED_ORIGINS = [
-    "http://127.0.0.1:8000"
+    "http://localhost:5173"
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,10 +64,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'account',
+    
     'rest_framework', 
     'rest_framework_simplejwt',
     'corsheaders',
-    'account',
+    
 
 ]
 
