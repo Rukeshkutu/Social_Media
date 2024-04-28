@@ -54,7 +54,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CSRF_TURSTED_ORIGINS = [
-    "http://localhost:5173"
+    "http://localhost:5173",
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -65,7 +65,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'account',
-    
+    'post',
+
     'rest_framework', 
     'rest_framework_simplejwt',
     'corsheaders',

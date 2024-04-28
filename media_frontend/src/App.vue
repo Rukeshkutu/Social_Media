@@ -1,5 +1,5 @@
 <template>
-    <nav class="py-8 px-5 border-b border-grey-300">
+    <nav class="py-8 px-5 border-b border-grey-200">
         <div>
             <div class="flex item-center justify-between">
                 <div class="menu-left">
@@ -47,9 +47,43 @@
     <main class="px-8 py-6 bg-grey-100">
         <RouterView />
     </main>
+
+    <Toast />
 </template>
 
-<style scoped>
-
+<style>
+    
 </style>
+<script>
+import Toast from '@/components/Toast.vue'
+import { useUserStore } from "@/stores/user"
+import axios from 'axios';
+
+    export default{
+        setup(){
+            const userStore = useUserStore()
+
+            return{
+                userStore
+            }
+        },
+        
+        components: {
+            Toast
+        },
+
+        beforeCreate(){
+            //this.userStore.initStore()
+
+            const token = this.userStore.user.access
+
+            if(token){
+                axios.defaults.headers.common["Authorization"] = "Bearer" + token;
+            }
+            else{
+                axios.defaults.headers.common["Authorization"] = "";
+            }
+        }
+    }
+</script>
  

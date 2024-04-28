@@ -8,8 +8,8 @@ from account.forms import SignupForm
 def me(request):
     return JsonResponse({
         'id': request.user.id,
-        'email': request.user.name,
-        'password': request.user.email
+        'name': request.user.name,
+        'email': request.user.email
     })
 
 
@@ -23,14 +23,16 @@ def signup(request):
     form = SignupForm({
         'email' : data.get('email'),
         'name' : data.get('name'),
-        'password' : data.get('password'),
         'password1' : data.get('password1'),
+        'password2' : data.get('password2'),
     })
 
     if form.is_valid():
         form.save()
         #send verification email later.
     else:
-        message = 'Error'
+        message = form.errors.as_json()
+    
+    print(message)
 
     return JsonResponse({'message':message})
